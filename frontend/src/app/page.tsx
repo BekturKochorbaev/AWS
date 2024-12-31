@@ -1,15 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { useGetHotelListQuery } from "@/redux/api/data";
 import React from "react";
 import styles from "./page.module.scss";
 import { Star } from "lucide-react";
-import Image from "next/image";
+
 
 const Page = () => {
-  const { data } = useGetHotelListQuery();
-  console.log(data, "data");
+  const { data, isLoading, error } = useGetHotelListQuery(); // Добавляем isLoading и error
 
   const defaultImage = "/api/placeholder/300/200";
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading hotels</div>;
 
   return (
     <div className={styles.container}>
@@ -19,19 +22,15 @@ const Page = () => {
           <div key={index} className={styles.hotelCard}>
             <div className={styles.imageContainer}>
               {hotel.hotel_images?.length > 0 ? (
-                <Image
-                  src={hotel.hotel_images[0].image} // Changed this line to access image property
+                <img // Заменяем Image на img
+                  src={hotel.hotel_images[0].image}
                   alt={hotel.name_hotel}
-                  width={700}
-                  height={500}
                   className={styles.hotelImage}
                 />
               ) : (
-                <Image
+                <img // Заменяем Image на img
                   src={defaultImage}
                   alt="default hotel image"
-                  width={700}
-                  height={500}
                   className={styles.hotelImage}
                 />
               )}
