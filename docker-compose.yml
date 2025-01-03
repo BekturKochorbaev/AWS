@@ -32,7 +32,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - /home/ubuntu/Iant/backend/staticfiles:/app/static
+      - /home/ubuntu/AWS/backend/staticfiles:/app/staticfiles
       - ./backend/media:/app/media
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/')"]
@@ -73,7 +73,7 @@ services:
         condition: service_healthy
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - /home/ubuntu/Iant/backend/staticfiles:/app/static
+      - /home/ubuntu/AWS/backend/staticfiles:/app/staticfiles
       - ./backend/media:/app/media
     healthcheck:
       test: ["CMD", "nginx", "-t"]
